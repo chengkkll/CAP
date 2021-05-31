@@ -49,6 +49,11 @@ namespace DotNetCore.CAP.Internal
             return Task.Run(() => Publish(name, value, callbackName), cancellationToken);
         }
 
+        public void Publish<T>(string name, Type type, T contentObj, string callbackName = null)
+        {
+            Publish($"{name}-{type.FullName}", contentObj, callbackName);
+        }
+
         public void Publish<T>(string name, T value, string callbackName = null)
         {
             var header = new Dictionary<string, string>
@@ -57,6 +62,11 @@ namespace DotNetCore.CAP.Internal
             };
 
             Publish(name, value, header);
+        }
+
+        public void Publish<T>(string name, Type type, T value, IDictionary<string, string> headers)
+        {
+            Publish($"{name}-{type.FullName}", value, headers);
         }
 
         public void Publish<T>(string name, T value, IDictionary<string, string> headers)
@@ -78,7 +88,7 @@ namespace DotNetCore.CAP.Internal
                 var messageId = SnowflakeId.Default().NextId().ToString();
                 headers.Add(Headers.MessageId, messageId);
             }
-             
+
             if (!headers.ContainsKey(Headers.CorrelationId))
             {
                 headers.Add(Headers.CorrelationId, headers[Headers.MessageId]);

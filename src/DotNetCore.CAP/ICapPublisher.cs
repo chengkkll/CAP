@@ -52,8 +52,26 @@ namespace DotNetCore.CAP
         /// Publish an object message.
         /// </summary>
         /// <param name="name">the topic name or exchange router key.</param>
+        /// <param name="type">Combination with name.</param>
+        /// <param name="contentObj">message body content, that will be serialized. (can be null)</param>
+        /// <param name="callbackName">callback subscriber name</param>
+        void Publish<T>(string name, Type type, [CanBeNull] T contentObj, string callbackName = null);
+
+        /// <summary>
+        /// Publish an object message.
+        /// </summary>
+        /// <param name="name">the topic name or exchange router key.</param>
         /// <param name="contentObj">message body content, that will be serialized. (can be null)</param>
         /// <param name="headers">message additional headers.</param>
         void Publish<T>(string name, [CanBeNull] T contentObj, IDictionary<string, string> headers);
+
+        /// <summary>
+        /// Publish an object message.
+        /// </summary>
+        /// <param name="name">the topic name or exchange router key.</param>
+        /// <param name="type">Combination with name.</param>
+        /// <param name="contentObj">message body content, that will be serialized. (can be null)</param>
+        /// <param name="headers">message additional headers.</param>
+        void Publish<T>(string name, Type type, [CanBeNull] T contentObj, IDictionary<string, string> headers);
     }
 }

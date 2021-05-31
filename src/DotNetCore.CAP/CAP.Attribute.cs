@@ -17,6 +17,12 @@ namespace DotNetCore.CAP
 
         }
 
+        public CapSubscribeAttribute(string pre, Type type, bool isPartial = false)
+            : base($"{pre}-{type.FullName}", isPartial)
+        {
+
+        }
+
         public override string ToString()
         {
             return Name;
@@ -26,7 +32,7 @@ namespace DotNetCore.CAP
     [AttributeUsage(AttributeTargets.Parameter)]
     public class FromCapAttribute : Attribute
     {
-       
+
     }
 
     public class CapHeader : ReadOnlyDictionary<string, string>
